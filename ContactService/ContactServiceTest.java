@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ContactServiceTest {
 
     @Test
-    void addContactShouldStoreContact() {
+    void testAddContactShouldStoreContact() {
         ContactService service = new ContactService();
         Contact c = new Contact("1", "John", "Lennon", "1234567890", "Address");
 
@@ -16,13 +16,13 @@ public class ContactServiceTest {
     }
 
     @Test
-    void addNullContactShouldThrow() {
+    void testAddNullContactShouldThrow() {
         ContactService service = new ContactService();
         assertThrows(NullPointerException.class, () -> service.addContact(null));
     }
 
     @Test
-    void addDuplicateIdShouldThrowCustomException() {
+    void testAddDuplicateIdShouldThrowCustomException() {
         ContactService service = new ContactService();
         service.addContact(new Contact("1", "John", "Lennon", "1234567890", "Address"));
 
@@ -31,7 +31,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    void deleteExistingContactShouldRemoveIt() {
+    void testDeleteExistingContactShouldRemoveIt() {
         ContactService service = new ContactService();
         service.addContact(new Contact("1", "John", "Lennon", "1234567890", "Address"));
 
@@ -41,13 +41,13 @@ public class ContactServiceTest {
     }
 
     @Test
-    void deleteNonExistingContactShouldThrowCustomNotFound() {
+    void testDeleteNonExistingContactShouldThrowCustomNotFound() {
         ContactService service = new ContactService();
         assertThrows(ContactService.NotFoundException.class, () -> service.deleteContact("999"));
     }
 
     @Test
-    void updateShouldModifyAllowedFields() {
+    void testUpdateShouldModifyAllowedFields() {
         ContactService service = new ContactService();
         service.addContact(new Contact("1", "John", "Lennon", "1234567890", "Address"));
 
@@ -61,14 +61,14 @@ public class ContactServiceTest {
     }
 
     @Test
-    void updateNonExistingContactShouldThrowNotFound() {
+    void testUpdateNonExistingContactShouldThrowNotFound() {
         ContactService service = new ContactService();
         assertThrows(ContactService.NotFoundException.class, () ->
                 service.updateContact("999", "Paul", "McCartney", "0987654321", "New Address"));
     }
 
     @Test
-    void updateWithInvalidPhoneShouldThrowValidation() {
+    void testUpdateWithInvalidPhoneShouldThrowValidation() {
         ContactService service = new ContactService();
         service.addContact(new Contact("1", "John", "Lennon", "1234567890", "Address"));
 

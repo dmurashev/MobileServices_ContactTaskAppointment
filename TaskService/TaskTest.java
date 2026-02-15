@@ -8,7 +8,7 @@ public class TaskTest {
     }
 
     @Test
-    void createValidTaskShouldSucceed() {
+    void testCreateValidTaskShouldSucceed() {
         Task task = new Task("123", "Write Code", "Implement the task service logic");
 
         assertEquals("123", task.getTaskId());
@@ -19,19 +19,19 @@ public class TaskTest {
     // ---- Boundary ----
 
     @Test
-    void taskIdExactly10CharactersShouldWork() {
+    void testTaskIdExactly10CharactersShouldWork() {
         Task task = new Task("1234567890", "Name", "Description");
         assertEquals("1234567890", task.getTaskId());
     }
 
     @Test
-    void nameExactly20CharactersShouldWork() {
+    void testNameExactly20CharactersShouldWork() {
         Task task = new Task("1", s(20), "Description");
         assertEquals(s(20), task.getName());
     }
 
     @Test
-    void descriptionExactly50CharactersShouldWork() {
+    void testDescriptionExactly50CharactersShouldWork() {
         Task task = new Task("1", "Name", s(50));
         assertEquals(s(50), task.getDescription());
     }
@@ -39,27 +39,27 @@ public class TaskTest {
     // ---- Negative ----
 
     @Test
-    void nullTaskIdShouldThrow() {
+    void testNullTaskIdShouldThrow() {
         assertThrows(NullPointerException.class, () -> new Task(null, "Name", "Description"));
     }
 
     @Test
-    void blankNameShouldThrow() {
+    void testBlankNameShouldThrow() {
         assertThrows(Task.ValidationException.class, () -> new Task("1", "   ", "Description"));
     }
 
     @Test
-    void nameTooLongShouldThrow() {
+    void testNameTooLongShouldThrow() {
         assertThrows(Task.ValidationException.class, () -> new Task("1", s(21), "Description"));
     }
 
     @Test
-    void descriptionTooLongShouldThrow() {
+    void testDescriptionTooLongShouldThrow() {
         assertThrows(Task.ValidationException.class, () -> new Task("1", "Name", s(51)));
     }
 
     @Test
-    void updatesShouldValidate() {
+    void testUpdatesShouldValidate() {
         Task task = new Task("1", "Name", "Description");
         task.setName("New Name");
         task.setDescription("New Description");
@@ -69,7 +69,7 @@ public class TaskTest {
     }
 
     @Test
-    void updateDescriptionInvalidShouldThrow() {
+    void testUpdateDescriptionInvalidShouldThrow() {
         Task task = new Task("1", "Name", "Description");
         assertThrows(Task.ValidationException.class, () -> task.setDescription(s(51)));
     }

@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class AppointmentTest {
 
-    private Date futureDateMillis(long millisInFuture) {
-        return new Date(System.currentTimeMillis() + millisInFuture);
+    private Date futureDate() {
+        return new Date(System.currentTimeMillis() + 1000);
     }
 
     private String s(int len) {
@@ -14,7 +14,7 @@ public class AppointmentTest {
 
     @Test
     void testValidAppointmentCreation() {
-        Date future = futureDateMillis(60_000);
+        Date future = futureDate();
         Appointment apt = new Appointment("123", future, "Doctor visit");
 
         assertEquals("123", apt.getAppointmentId());
@@ -23,62 +23,62 @@ public class AppointmentTest {
     }
 
     @Test
-    void idExactlyTenCharactersShouldWork() {
-        Date future = futureDateMillis(60_000);
+    void testIdExactlyTenCharactersShouldWork() {
+        Date future = futureDate();
         Appointment apt = new Appointment("1234567890", future, "Valid description");
         assertEquals("1234567890", apt.getAppointmentId());
     }
 
     @Test
-    void descriptionExactly50CharactersShouldWork() {
-        Date future = futureDateMillis(60_000);
+    void testDescriptionExactly50CharactersShouldWork() {
+        Date future = futureDate();
         Appointment apt = new Appointment("1", future, s(50));
         assertEquals(s(50), apt.getDescription());
     }
 
     @Test
-    void nullAppointmentIdShouldThrow() {
-        Date future = futureDateMillis(60_000);
+    void testNullAppointmentIdShouldThrow() {
+        Date future = futureDate();
         assertThrows(NullPointerException.class, () -> new Appointment(null, future, "Desc"));
     }
 
     @Test
-    void appointmentIdTooLongShouldThrow() {
-        Date future = futureDateMillis(60_000);
+    void testAppointmentIdTooLongShouldThrow() {
+        Date future = futureDate();
         assertThrows(Appointment.ValidationException.class, () ->
                 new Appointment("12345678901", future, "Desc"));
     }
 
     @Test
-    void nullDateShouldThrow() {
+    void testNullAppointmentDate() {
         assertThrows(NullPointerException.class, () ->
                 new Appointment("1", null, "Desc"));
     }
 
     @Test
-    void pastDateShouldThrow() {
+    void testPastDateNotAllowed() {
         Date past = new Date(System.currentTimeMillis() - 60_000);
         assertThrows(Appointment.ValidationException.class, () ->
                 new Appointment("1", past, "Desc"));
     }
 
     @Test
-    void nullDescriptionShouldThrow() {
-        Date future = futureDateMillis(60_000);
+    void testNullDescriptionShouldThrow() {
+        Date future = futureDate();
         assertThrows(NullPointerException.class, () ->
                 new Appointment("1", future, null));
     }
 
     @Test
-    void descriptionTooLongShouldThrow() {
-        Date future = futureDateMillis(60_000);
+    void testDescriptionTooLongShouldThrow() {
+        Date future = futureDate();
         assertThrows(Appointment.ValidationException.class, () ->
                 new Appointment("1", future, s(51)));
     }
 
     @Test
-    void getAppointmentDateReturnsDefensiveCopy() {
-        Date future = futureDateMillis(60_000);
+    void testGetAppointmentDateReturnsDefensiveCopy() {
+        Date future = futureDate();
         Appointment apt = new Appointment("1", future, "Desc");
 
         Date d1 = apt.getAppointmentDate();

@@ -9,7 +9,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    void addAppointmentShouldStoreAppointment() {
+    void testAddAppointment() {
         AppointmentService service = new AppointmentService();
         Appointment apt = new Appointment("1", futureDate(), "Meeting");
 
@@ -19,13 +19,13 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    void addNullAppointmentShouldThrow() {
+    void testAddNullAppointment() {
         AppointmentService service = new AppointmentService();
         assertThrows(NullPointerException.class, () -> service.addAppointment(null));
     }
 
     @Test
-    void duplicateAppointmentIdShouldThrowCustomException() {
+    void testDuplicateAppointmentId() {
         AppointmentService service = new AppointmentService();
         service.addAppointment(new Appointment("1", futureDate(), "Meeting"));
 
@@ -34,7 +34,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    void deleteAppointmentShouldRemoveIt() {
+    void testDeleteAppointment() {
         AppointmentService service = new AppointmentService();
         service.addAppointment(new Appointment("1", futureDate(), "Meeting"));
 
@@ -44,7 +44,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    void deleteNonExistingAppointmentShouldThrowNotFound() {
+    void testDeleteNonExistingAppointment() {
         AppointmentService service = new AppointmentService();
         assertThrows(AppointmentService.NotFoundException.class, () -> service.deleteAppointment("999"));
     }

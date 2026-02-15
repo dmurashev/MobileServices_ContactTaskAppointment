@@ -9,7 +9,7 @@ public class ContactTest {
     }
 
     @Test
-    void createValidContactShouldSucceed() {
+    void testCreateValidContactShouldSucceed() {
         Contact c = new Contact("123", "John", "Lennon", "1234567890", "1 W 72nd St, New York");
 
         assertEquals("123", c.getContactId());
@@ -22,25 +22,25 @@ public class ContactTest {
     // ---- Boundary tests ----
 
     @Test
-    void idExactly10CharactersShouldWork() {
+    void testIdExactly10CharactersShouldWork() {
         Contact c = new Contact("1234567890", "John", "Lennon", "1234567890", "Address");
         assertEquals("1234567890", c.getContactId());
     }
 
     @Test
-    void firstNameExactly10CharactersShouldWork() {
+    void testFirstNameExactly10CharactersShouldWork() {
         Contact c = new Contact("1", s(10), "Lennon", "1234567890", "Address");
         assertEquals(s(10), c.getFirstName());
     }
 
     @Test
-    void lastNameExactly10CharactersShouldWork() {
+    void testLastNameExactly10CharactersShouldWork() {
         Contact c = new Contact("1", "John", s(10), "1234567890", "Address");
         assertEquals(s(10), c.getLastName());
     }
 
     @Test
-    void addressExactly30CharactersShouldWork() {
+    void testAddressExactly30CharactersShouldWork() {
         Contact c = new Contact("1", "John", "Lennon", "1234567890", s(30));
         assertEquals(s(30), c.getAddress());
     }
@@ -48,49 +48,49 @@ public class ContactTest {
     // ---- Negative validation tests ----
 
     @Test
-    void nullContactIdShouldThrow() {
+    void testNullContactIdShouldThrow() {
         assertThrows(NullPointerException.class, () ->
                 new Contact(null, "John", "Lennon", "1234567890", "Address"));
     }
 
     @Test
-    void blankContactIdShouldThrow() {
+    void testBlankContactIdShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("   ", "John", "Lennon", "1234567890", "Address"));
     }
 
     @Test
-    void idTooLongShouldThrow() {
+    void testIdTooLongShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("12345678901", "John", "Lennon", "1234567890", "Address"));
     }
 
     @Test
-    void nullFirstNameShouldThrow() {
+    void testNullFirstNameShouldThrow() {
         assertThrows(NullPointerException.class, () ->
                 new Contact("1", null, "Lennon", "1234567890", "Address"));
     }
 
     @Test
-    void firstNameTooLongShouldThrow() {
+    void testFirstNameTooLongShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("1", s(11), "Lennon", "1234567890", "Address"));
     }
 
     @Test
-    void phoneNot10DigitsShouldThrow() {
+    void testPhoneNot10DigitsShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("1", "John", "Lennon", "123456789", "Address"));
     }
 
     @Test
-    void phoneWithLettersShouldThrow() {
+    void testPhoneWithLettersShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("1", "John", "Lennon", "12345abcde", "Address"));
     }
 
     @Test
-    void addressTooLongShouldThrow() {
+    void testAddressTooLongShouldThrow() {
         assertThrows(Contact.ValidationException.class, () ->
                 new Contact("1", "John", "Lennon", "1234567890", s(31)));
     }
@@ -98,7 +98,7 @@ public class ContactTest {
     // ---- Update tests ----
 
     @Test
-    void updatesShouldValidate() {
+    void testUpdatesShouldValidate() {
         Contact c = new Contact("1", "John", "Lennon", "1234567890", "Address");
 
         c.setFirstName("Paul");
@@ -113,7 +113,7 @@ public class ContactTest {
     }
 
     @Test
-    void updatePhoneInvalidShouldThrow() {
+    void testUpdatePhoneInvalidShouldThrow() {
         Contact c = new Contact("1", "John", "Lennon", "1234567890", "Address");
         assertThrows(Contact.ValidationException.class, () -> c.setPhone("111"));
     }
